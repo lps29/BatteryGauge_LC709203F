@@ -34,6 +34,12 @@ typedef enum {
     THERMISTOR_MODE = 1
 } lc709203f_temp_obtaining_mode_t;
 
+enum {
+    LC709203F_OK                =  0,       /**< all went as expected */
+    LC709203F_NOI2C             = -1,       /**< error using the I2C bus */
+    LC709203F_CELL_TEMP_INVALID = -2        /**< Cell temp invalid */
+};
+
 
 // LC709203F register definitions
 #define LC709203F_REG_CELL_VOLTAGE      0x09        /**< Register Cell Voltage */
@@ -60,13 +66,35 @@ class BatteryGauge_LC709203F
 public:
     BatteryGauge_LC709203F();
     
-    void lc709203f_set_thermistor_b(const unsigned int b_value);
     int16_t lc709203f_get_voltage();
     int16_t lc709203f_get_rsoc();
     int16_t lc709203f_get_cell_temp();
     lc709203f_temp_obtaining_mode_t lc709203f_get_status_bit();
+    int16_t lc709203f_get_ite();
+    lc709203f_power_mode_t lc709203f_get_power_mode();
+    int16_t lc709203f_get_alarm_low_voltage();
+    int16_t lc709203f_get_alarm_low_rsoc();
+    int16_t lc709203f_get_change_of_parameter();
+    int16_t lc709203f_get_apt();
+    int16_t lc709203f_get_apa();
+    lc709203f_current_direction_t lc709203f_get_current_direction();
+    int16_t lc709203f_get_thermistor_b();
     int16_t lc709203f_get_id();
-
+    
+    void lc709203f_set_rsoc_before();
+    void lc709203f_set_thermistor_b(const unsigned int value);
+    void lc709203f_set_rsoc_initial();
+    int8_t lc709203f_set_cell_temp(const unsigned int value);
+    void lc709203f_set_current_direction(const lc709203f_current_direction_t direction);
+    void lc709203f_set_apa(uint8_t value);
+    void lc709203f_set_apt(const unsigned int value);
+    void lc709203f_set_change_of_parameter(const lc709203f_battery_profile_t value);
+    void lc709203f_set_alarm_low_rsoc(const uint8_t value);
+    void lc709203f_set_alarm_low_cell_voltage(const unsigned int value);
+    void lc709203f_set_power_mode(const lc709203f_power_mode_t value);
+    void lc709203f_set_status_bit(const lc709203f_temp_obtaining_mode_t value);
+    
+private:
     uint8_t get_crc(uint8_t *rec_values, uint8_t len);
     byte get_register(byte reg_addr);
     void set_register(unsigned char reg_addr, unsigned char reg_value);  
