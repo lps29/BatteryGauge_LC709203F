@@ -69,15 +69,15 @@ public:
     int16_t lc709203f_get_voltage();
     int16_t lc709203f_get_rsoc();
     int16_t lc709203f_get_cell_temp();
-    lc709203f_temp_obtaining_mode_t lc709203f_get_status_bit();
+    int16_t lc709203f_get_status_bit();
     int16_t lc709203f_get_ite();
-    lc709203f_power_mode_t lc709203f_get_power_mode();
+    int16_t lc709203f_get_power_mode();
     int16_t lc709203f_get_alarm_low_voltage();
     int16_t lc709203f_get_alarm_low_rsoc();
     int16_t lc709203f_get_change_of_parameter();
     int16_t lc709203f_get_apt();
     int16_t lc709203f_get_apa();
-    lc709203f_current_direction_t lc709203f_get_current_direction();
+    int16_t lc709203f_get_current_direction();
     int16_t lc709203f_get_thermistor_b();
     int16_t lc709203f_get_id();
     
