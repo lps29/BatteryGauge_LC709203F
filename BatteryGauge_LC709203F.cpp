@@ -42,7 +42,7 @@ int16_t BatteryGauge_LC709203F::lc709203f_get_voltage()
     uint8_t crc_buf[5] = { LC709203F_ADDR << 1, LC709203F_REG_CELL_VOLTAGE, ((LC709203F_ADDR << 1) | 0x01), rec_buf[0], rec_buf[1] };
     if (get_crc(crc_buf, 5) != rec_buf[2]) {
         //DEBUG("CRC Error \n");
-        return 0;
+        return -1;
     }
     return (((unsigned int)rec_buf[1] << 8) | rec_buf[0]);
 }
@@ -65,7 +65,7 @@ int16_t BatteryGauge_LC709203F::lc709203f_get_rsoc()
     uint8_t crc_buf[5] = { LC709203F_ADDR << 1, LC709203F_REG_RSOC, ((LC709203F_ADDR << 1) | 0x01), rec_buf[0], rec_buf[1] };
     if (get_crc(crc_buf, 5) != rec_buf[2]) {
         //DEBUG("CRC Error \n");
-        return 0;
+        return -1;
     }
     return (((unsigned int)rec_buf[1] << 8) | rec_buf[0]);
 }
@@ -88,13 +88,13 @@ int16_t BatteryGauge_LC709203F::lc709203f_get_cell_temp()
     uint8_t crc_buf[5] = { LC709203F_ADDR << 1, LC709203F_REG_CELL_TEMP, ((LC709203F_ADDR << 1) | 0x01), rec_buf[0], rec_buf[1] };
     if (get_crc(crc_buf, 5) != rec_buf[2]) {
         //DEBUG("CRC Error \n");
-        return 0;
+        return -1;
     }
     return ((((unsigned int)rec_buf[1] << 8) | rec_buf[0]) - 2731.5);
 }
 
 
-lc709203f_temp_obtaining_mode_t BatteryGauge_LC709203F::lc709203f_get_status_bit()
+int16_t BatteryGauge_LC709203F::lc709203f_get_status_bit()
 {
     uint8_t rec_buf[3];
  
@@ -111,7 +111,7 @@ lc709203f_temp_obtaining_mode_t BatteryGauge_LC709203F::lc709203f_get_status_bit
     uint8_t crc_buf[5] = { LC709203F_ADDR << 1, LC709203F_REG_STATUS, ((LC709203F_ADDR << 1) | 0x01), rec_buf[0], rec_buf[1] };
     if (get_crc(crc_buf, 5) != rec_buf[2]) {
         //DEBUG("CRC Error \n");
-        return 0;
+        return -1;
     }
     return (((unsigned int)rec_buf[1] << 8) | rec_buf[0]);
 }
@@ -134,12 +134,12 @@ int16_t BatteryGauge_LC709203F::lc709203f_get_ite()
     uint8_t crc_buf[5] = {LC709203F_ADDR << 1, LC709203F_REG_ITE, ((LC709203F_ADDR << 1) | 0x01), rec_buf[0], rec_buf[1] };
     if (get_crc(crc_buf, 5) != rec_buf[2]) {
         //DEBUG("CRC Error \n");
-        return 0;
+        return -1;
     }
     return (((unsigned int)rec_buf[1] << 8) | rec_buf[0]);
 }
 
-lc709203f_power_mode_t BatteryGauge_LC709203F::lc709203f_get_power_mode()
+int16_t BatteryGauge_LC709203F::lc709203f_get_power_mode()
 {
     uint8_t rec_buf[3];
     
@@ -156,7 +156,7 @@ lc709203f_power_mode_t BatteryGauge_LC709203F::lc709203f_get_power_mode()
     uint8_t crc_buf[5] = { LC709203F_ADDR << 1, LC709203F_REG_POWER_MODE, ((LC709203F_ADDR << 1) | 0x01), rec_buf[0], rec_buf[1] };
     if (get_crc(crc_buf, 5) != rec_buf[2]) {
         //DEBUG("CRC Error \n");
-        return 0;
+        return -1;
     }
     return (((unsigned int)rec_buf[1] << 8) | rec_buf[0]);
 }
@@ -203,7 +203,7 @@ int16_t BatteryGauge_LC709203F::lc709203f_get_alarm_low_rsoc()
     uint8_t crc_buf[5] = { LC709203F_ADDR << 1, LC709203F_REG_ALARM_RSOC, ((LC709203F_ADDR << 1) | 0x01), rec_buf[0], rec_buf[1] };
     if (get_crc(crc_buf, 5) != rec_buf[2]) {
         //DEBUG("CRC Error \n");
-        return 0;
+        return -1;
     }
     return (((unsigned int)rec_buf[1] << 8) | rec_buf[0]);
 }
@@ -226,7 +226,7 @@ int16_t BatteryGauge_LC709203F::lc709203f_get_change_of_parameter()
     uint8_t crc_buf[5] = { LC709203F_ADDR << 1, LC709203F_REG_CHANGE_PARAMETER, ((LC709203F_ADDR << 1) | 0x01), rec_buf[0], rec_buf[1] };
     if (get_crc(crc_buf, 5) != rec_buf[2]) {
         //DEBUG("CRC Error \n");
-        return 0;
+        return -1;
     }
     return (((unsigned int)rec_buf[1] << 8) | rec_buf[0]);
 }
@@ -249,7 +249,7 @@ int16_t BatteryGauge_LC709203F::lc709203f_get_apt()
     uint8_t crc_buf[5] = { LC709203F_ADDR << 1, LC709203F_REG_APT, ((LC709203F_ADDR << 1) | 0x01), rec_buf[0], rec_buf[1] };
     if (get_crc(crc_buf, 5) != rec_buf[2]) {
         //DEBUG("CRC Error \n");
-        return 0;
+        return -1;
     }
     return (((unsigned int)rec_buf[1] << 8) | rec_buf[0]);
 }
@@ -276,7 +276,7 @@ int16_t BatteryGauge_LC709203F::lc709203f_get_apa()
     return (((unsigned int)rec_buf[1] << 8) | rec_buf[0]);
 }
 
-lc709203f_current_direction_t BatteryGauge_LC709203F::lc709203f_get_current_direction()
+int16_t BatteryGauge_LC709203F::lc709203f_get_current_direction()
 {
     uint8_t rec_buf[3];
     
@@ -293,7 +293,7 @@ lc709203f_current_direction_t BatteryGauge_LC709203F::lc709203f_get_current_dire
     uint8_t crc_buf[5] = { LC709203F_ADDR << 1, LC709203F_REG_CURRENT_DIRECTION, ((LC709203F_ADDR << 1) | 0x01), rec_buf[0], rec_buf[1] };
     if (get_crc(crc_buf, 5) != rec_buf[2]) {
         //DEBUG("CRC Error \n");
-        return 0;
+        return -1;
     }
     return (((unsigned int)rec_buf[1] << 8) | rec_buf[0]);
 }
@@ -315,7 +315,7 @@ int16_t BatteryGauge_LC709203F::lc709203f_get_thermistor_b()
     uint8_t crc_buf[5] = { LC709203F_ADDR << 1, LC709203F_REG_THERMISTOR, ((LC709203F_ADDR << 1) | 0x01), rec_buf[0], rec_buf[1] };
     if (get_crc(crc_buf, 5) != rec_buf[2]) {
         //DEBUG("CRC Error \n");
-        return 0;
+        return -1;
     }
     return (((unsigned int)rec_buf[1] << 8) | rec_buf[0]);
 }
@@ -338,7 +338,7 @@ int16_t BatteryGauge_LC709203F::lc709203f_get_id()
     uint8_t crc_buf[5] = { LC709203F_ADDR << 1, LC709203F_REG_ID, ((LC709203F_ADDR << 1) | 0x01), rec_buf[0], rec_buf[1] };
     if (get_crc(crc_buf, 5) != rec_buf[2]) {
         //DEBUG("CRC Error \n");
-        return 0;
+        return -1;
     }
     return (((unsigned int)rec_buf[1] << 8) | rec_buf[0]);
 }
@@ -528,4 +528,3 @@ unsigned char BatteryGauge_LC709203F::get_register(unsigned char reg_addr)
 BatteryGauge_LC709203F::BatteryGauge_LC709203F()
 {
 }
-
