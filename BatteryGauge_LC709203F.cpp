@@ -358,7 +358,7 @@ void BatteryGauge_LC709203F::lc709203f_set_rsoc_before()
 
 void BatteryGauge_LC709203F::lc709203f_set_thermistor_b(const unsigned int value)
 {
-    uint8_t crc_buf[4] = { LC709203F_ADDR << 1, LC709203F_REG_THERMISTOR, (uint8_t)value, (uint8_t)value << 8 };
+    uint8_t crc_buf[4] = { LC709203F_ADDR << 1, LC709203F_REG_THERMISTOR, (uint8_t)value, (uint8_t)(value >> 8) };
     uint8_t send_buf[3] = { crc_buf[2], crc_buf[3], get_crc(crc_buf, 4) };
 
     Wire.beginTransmission(LC709203F_ADDR);
@@ -389,7 +389,7 @@ int8_t BatteryGauge_LC709203F::lc709203f_set_cell_temp(const unsigned int value)
         //DEBUG("gauge_set_cell_temp(): temp outside of range \n");
         return LC709203F_CELL_TEMP_INVALID;
     }
-    uint8_t crc_buf[4] = { LC709203F_ADDR << 1, LC709203F_REG_CELL_TEMP, value, value << 8 };
+    uint8_t crc_buf[4] = { LC709203F_ADDR << 1, LC709203F_REG_CELL_TEMP, (uint8_t)value, (uint8_t)(value >> 8) };
     uint8_t send_buf[3] = { crc_buf[2], crc_buf[3], get_crc(crc_buf, 4) };
     
     Wire.beginTransmission(LC709203F_ADDR);
@@ -402,7 +402,7 @@ int8_t BatteryGauge_LC709203F::lc709203f_set_cell_temp(const unsigned int value)
 
 void BatteryGauge_LC709203F::lc709203f_set_current_direction(const lc709203f_current_direction_t direction)
 {
-    uint8_t crc_buf[4] = { LC709203F_ADDR << 1, LC709203F_REG_CURRENT_DIRECTION, (uint8_t)direction, (uint8_t)direction << 8 };
+    uint8_t crc_buf[4] = { LC709203F_ADDR << 1, LC709203F_REG_CURRENT_DIRECTION, (uint8_t)direction, (uint8_t)(direction >> 8) };
     uint8_t send_buf[3] = { crc_buf[2], crc_buf[3], get_crc(crc_buf, 4) };
 
     Wire.beginTransmission(LC709203F_ADDR);
@@ -415,7 +415,7 @@ void BatteryGauge_LC709203F::lc709203f_set_current_direction(const lc709203f_cur
 
 void BatteryGauge_LC709203F::lc709203f_set_apa(uint8_t value)
 {
-    uint8_t crc_buf[4] = { LC709203F_ADDR << 1, LC709203F_REG_APA, value, 0 };
+    uint8_t crc_buf[4] = { LC709203F_ADDR << 1, LC709203F_REG_APA, (uint8_t)value, 0 };
     uint8_t send_buf[3] = { crc_buf[2], crc_buf[3], get_crc(crc_buf, 4) };
 
     Wire.beginTransmission(LC709203F_ADDR);
@@ -428,7 +428,7 @@ void BatteryGauge_LC709203F::lc709203f_set_apa(uint8_t value)
 
 void BatteryGauge_LC709203F::lc709203f_set_apt(const unsigned int value)
 {
-    uint8_t crc_buf[4] = { LC709203F_ADDR << 1, LC709203F_REG_APT, value, value << 8 };
+    uint8_t crc_buf[4] = { LC709203F_ADDR << 1, LC709203F_REG_APT, (uint8_t)value, (uint8_t)(value >> 8) };
     uint8_t send_buf[3] = { crc_buf[2], crc_buf[3], get_crc(crc_buf, 4) };
     
     Wire.beginTransmission(LC709203F_ADDR);
@@ -441,7 +441,7 @@ void BatteryGauge_LC709203F::lc709203f_set_apt(const unsigned int value)
 
 void BatteryGauge_LC709203F::lc709203f_set_change_of_parameter(const lc709203f_battery_profile_t value)
 {
-    uint8_t crc_buf[4] = {LC709203F_ADDR << 1, LC709203F_REG_CHANGE_PARAMETER, (uint8_t) value, (uint8_t) value << 8 };
+    uint8_t crc_buf[4] = {LC709203F_ADDR << 1, LC709203F_REG_CHANGE_PARAMETER, (uint8_t)value, 0 };
     uint8_t send_buf[3] = { crc_buf[2], crc_buf[3], get_crc(crc_buf, 4) };
     
     Wire.beginTransmission(LC709203F_ADDR);
@@ -454,7 +454,7 @@ void BatteryGauge_LC709203F::lc709203f_set_change_of_parameter(const lc709203f_b
 
 void BatteryGauge_LC709203F::lc709203f_set_alarm_low_rsoc(const uint8_t value)
 {
-    uint8_t crc_buf[4] = { LC709203F_ADDR << 1, LC709203F_REG_ALARM_RSOC, value, 0 };
+    uint8_t crc_buf[4] = { LC709203F_ADDR << 1, LC709203F_REG_ALARM_RSOC, (uint8_t)value, 0 };
     uint8_t send_buf[3] = { crc_buf[2], crc_buf[3], get_crc(crc_buf, 4) };
     
     Wire.beginTransmission(LC709203F_ADDR);
@@ -467,7 +467,7 @@ void BatteryGauge_LC709203F::lc709203f_set_alarm_low_rsoc(const uint8_t value)
 
 void BatteryGauge_LC709203F::lc709203f_set_alarm_low_cell_voltage(const unsigned int value)
 {
-    uint8_t crc_buf[4] = { LC709203F_ADDR << 1, LC709203F_REG_ALARM_VOLTAGE, value, value << 8 };
+    uint8_t crc_buf[4] = { LC709203F_ADDR << 1, LC709203F_REG_ALARM_VOLTAGE, (uint8_t)(value), (uint8_t)(value >> 8) };
     uint8_t send_buf[3] = { crc_buf[2], crc_buf[3], get_crc(crc_buf, 4) };
     
     Wire.beginTransmission(LC709203F_ADDR);
@@ -493,7 +493,7 @@ void BatteryGauge_LC709203F::lc709203f_set_power_mode(const lc709203f_power_mode
 
 void BatteryGauge_LC709203F::lc709203f_set_status_bit(const lc709203f_temp_obtaining_mode_t value)
 {
-    uint8_t crc_buf[4] = { LC709203F_ADDR << 1, LC709203F_REG_STATUS, (uint8_t) value, 0 };
+    uint8_t crc_buf[4] = { LC709203F_ADDR << 1, LC709203F_REG_STATUS, (uint8_t)value, 0 };
     uint8_t send_buf[3] = { crc_buf[2], crc_buf[3], get_crc(crc_buf, 4) };
 
     Wire.beginTransmission(LC709203F_ADDR);
